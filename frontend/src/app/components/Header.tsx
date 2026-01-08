@@ -1,8 +1,8 @@
 import { Rabbit, PlusIcon } from "lucide-react";
 
-type Props = {};
+type Props = { onAdd: () => void };
 
-export default function Header() {
+export default function Header({ onAdd }: Props) {
   return (
     <header className="bg-white shadow-sm border-b">
       <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
@@ -15,7 +15,7 @@ export default function Header() {
         </div>
 
         <button
-          //   onClick={}
+          onClick={onAdd}
           className="bg-green-600 text-white px-6 py-3 rounded-lg flex items-center gap-2"
         >
           <PlusIcon className="w-4 h-4" />

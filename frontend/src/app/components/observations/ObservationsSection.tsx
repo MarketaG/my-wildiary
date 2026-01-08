@@ -7,6 +7,7 @@ import type { Observation } from "@/types/observation";
 import Header from "../Header";
 import Stats from "./Stats";
 import ObservationsGrid from "./ObservationsGrid";
+import AddObservationModal from "../AddObservationModal";
 
 export default function ObservationSection() {
   const [observations, setObservations] = useState<Observation[]>([]);
@@ -50,7 +51,7 @@ export default function ObservationSection() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-green-50 to-blue-50">
-      <Header />
+      <Header onAdd={() => setIsModalOpen(true)} />
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         <Stats observations={observations} />
@@ -61,6 +62,13 @@ export default function ObservationSection() {
           onAdd={() => setIsModalOpen(true)}
         />
       </main>
+
+      {isModalOpen && (
+        <AddObservationModal
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={handleObservationAdded}
+        />
+      )}
     </div>
   );
 }
