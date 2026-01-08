@@ -9,6 +9,9 @@
     "prod": "node dist/server.js",
     "seed": "tsx scripts/seed.ts"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
