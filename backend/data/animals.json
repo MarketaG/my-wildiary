@@ -1,0 +1,44 @@
+[
+  {
+    "species": "Cervus elaphus",
+    "commonName": "Red deer",
+    "conservationStatus": "Least Concern",
+    "diet": "herbivore"
+  },
+  {
+    "species": "Vulpes vulpes",
+    "commonName": "Red fox",
+    "conservationStatus": "Least Concern",
+    "diet": "omnivore"
+  },
+  {
+    "species": "Capreolus capreolus",
+    "commonName": "Roe deer",
+    "conservationStatus": "Least Concern",
+    "diet": "herbivore"
+  },
+  {
+    "species": "Sus scrofa",
+    "commonName": "Wild boar",
+    "conservationStatus": "Least Concern",
+    "diet": "omnivore"
+  },
+  {
+    "species": "Lynx lynx",
+    "commonName": "Eurasian lynx",
+    "conservationStatus": "Endangered",
+    "diet": "carnivore"
+  },
+  {
+    "species": "Ursus arctos",
+    "commonName": "Brown bear",
+    "conservationStatus": "Vulnerable",
+    "diet": "omnivore"
+  },
+  {
+    "species": "Alces alces",
+    "commonName": "Moose",
+    "conservationStatus": "Least Concern",
+    "diet": "herbivore"
+  }
+]

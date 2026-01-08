@@ -1,0 +1,14 @@
+[
+  {
+    "name": "jan.novak",
+    "password": "$2a$10$K5x6Z7qK.9vN2kQ8rX1Y5e7H3mP9wL2sT4vB6nC8dF0gH1jK3mN4o"
+  },
+  {
+    "name": "marie.svobodova",
+    "password": "$2a$10$L6y7A8rL.0wO3lR9sY2Z6f8I4nQ0xM3tU5wC7oD9eG1hI2kL4nO5p"
+  },
+  {
+    "name": "petr.dvorak",
+    "password": "$2a$10$M7z8B9sM.1xP4mS0tZ3A7g9J5oR1yN4uV6xD8pE0fH2iJ3lM5oP6q"
+  }
+]

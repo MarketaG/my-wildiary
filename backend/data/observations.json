@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Deer by a stream in the morning mist",
+    "description": "A powerful male with large antlers was observed drinking in the early morning. The animal was calm and did not notice my presence from a distance of approximately 50 meters. Estimated age 8–10 years.",
+    "createdAt": "2024-01-05T08:30:00.000Z",
+    "habitat": "deciduous forest, river valley",
+    "weather": "clear, morning mist, temperature 5°C",
+    "latitude": 49.5384,
+    "longitude": 18.2467,
+    "imageUrl": "https://images.unsplash.com/photo-1730543061921-85ccd36056e2?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "title": "Fox hunting in the evening",
+    "description": "The fox was actively hunting at the edge of the forest during sunset. A healthy individual with typical reddish fur. After a short while, it disappeared into dense vegetation.",
+    "createdAt": "2024-01-03T19:15:00.000Z",
+    "habitat": "mixed forest, meadow edge",
+    "weather": "partly cloudy, temperature 2°C",
+    "latitude": 49.8209,
+    "longitude": 18.2625,
+    "imageUrl": "https://images.unsplash.com/photo-1734370985255-9702e0371c83?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "title": "Group of roe deer in a meadow",
+    "description": "A group of three roe deer (one buck, two does) was observed calmly grazing on the eastern edge of the forest. The animals were in very good condition.",
+    "createdAt": "2024-01-07T16:45:00.000Z",
+    "habitat": "forest edge, grassy meadow",
+    "weather": "partly cloudy, calm, temperature 8°C",
+    "latitude": 49.7342,
+    "longitude": 18.3156,
+    "imageUrl": "https://images.unsplash.com/photo-1637830547760-30b00bbd176d?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "title": "Wild boar sow with piglets in a wetland",
+    "description": "A wild boar sow with five piglets was observed wading through mud in a wetland area. Tracks indicate nocturnal activity throughout the area. The piglets were very active.",
+    "createdAt": "2024-01-04T07:00:00.000Z",
+    "habitat": "wetland, riverbank",
+    "weather": "foggy, high humidity, temperature 3°C",
+    "latitude": 49.6891,
+    "longitude": 18.1234,
+    "imageUrl": "https://images.unsplash.com/photo-1727701801294-292e1b28bff2?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "title": "Rare sighting of a Eurasian lynx!",
+    "description": "An exceptional sighting of an adult Eurasian lynx! The animal was seen crossing a forest road at a higher altitude. Photo documentation was taken from a distance of approximately 80 meters. The protected area administrator was contacted.",
+    "createdAt": "2024-01-01T14:20:00.000Z",
+    "habitat": "mountain mixed forest, altitude 950 m",
+    "weather": "light snowfall, temperature -5°C",
+    "latitude": 49.4823,
+    "longitude": 18.4567,
+    "imageUrl": "https://images.unsplash.com/photo-1719998999066-52aec4bf7d3b?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  }
+]
