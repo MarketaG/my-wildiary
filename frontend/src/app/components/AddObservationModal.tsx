@@ -194,7 +194,7 @@ export default function AddObservationModal({ onClose, onSuccess }: Props) {
             {/* Image URL */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Image URL only from "https://unsplash.com/" (optional)
+                Image URL only from https://unsplash.com (optional)
               </label>
               <input
                 type="url"
