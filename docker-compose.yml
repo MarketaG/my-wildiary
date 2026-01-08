@@ -1,28 +1,39 @@
 services:
   mongo:
     image: mongo:6
+    container_name: wildiary-mongo
     ports:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./backend
+    container_name: wildiary-backend
     env_file:
-      - ./.env
+      - ./backend/.env.docker
     ports:
       - "4000:4000"
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
 
   frontend:
     build: ./frontend
+    container_name: wildiary-frontend
     env_file:
-      - ./.env
+      - ./frontend/.env.local
     ports:
       - "3000:3000"
     depends_on:
       - backend
+    restart: unless-stopped
 
 volumes:
   mongo_data:
