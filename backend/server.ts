@@ -38,15 +38,13 @@ const startServer = async () => {
     await getDb();
 
     app.listen(PORT, () => {
-      console.log(`Backend running on http://localhost:${PORT}`);
-      console.log(`Health check: http://localhost:${PORT}/health`);
-      console.log(
-        `Observations API: http://localhost:${PORT}/api/observations`
-      );
-      console.log(`Animals API: http://localhost:${PORT}/api/animals`);
+      console.log(`Backend running on port ${PORT}`);
+      console.log("Health check: /health");
+      console.log("Observations API: /api/observations");
+      console.log("Animals API: /api/animals");
     });
   } catch (error) {
-    console.error("Failed to start server:", error);
+    console.error("Failed to start server", error);
     process.exit(1);
   }
 };

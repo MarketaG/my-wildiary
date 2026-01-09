@@ -9,7 +9,7 @@ export async function getDb() {
   if (!db) {
     await client.connect();
     db = client.db();
-    console.log("Connected to MongoDB:", uri);
+    console.log("Connected to MongoDB");
   }
   return db;
 }
