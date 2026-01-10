@@ -147,6 +147,37 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// UPDATE observation by ID
+router.put("/:id", async (req, res) => {
+  try {
+    const db = await getDb();
+
+    const updateData = {
+      title: req.body.title,
+      description: req.body.description,
+      habitat: req.body.habitat,
+      weather: req.body.weather,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      imageUrl: req.body.imageUrl || "",
+      animalId: req.body.animalId ? new ObjectId(req.body.animalId) : undefined,
+    };
+
+    const result = await db
+      .collection("observations")
+      .updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "Observation not found" });
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to update observation" });
+  }
+});
+
 // GET search observations
 router.get("/search", async (req, res) => {
   try {

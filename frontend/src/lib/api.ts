@@ -40,6 +40,21 @@ export async function deleteObservation(id: string) {
   if (!res.ok) throw new Error("Failed to delete observation");
 }
 
+export async function updateObservation(
+  id: string,
+  data: Partial<UpdateObservationInput>
+): Promise<void> {
+  const res = await fetch(`${API_URL}/api/observations/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to update observation");
+  }
+}
+
 export async function searchObservations(
   query: string
 ): Promise<Observation[]> {
