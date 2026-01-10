@@ -2,6 +2,7 @@
 
 import { useAppRouting } from "@/hooks/useAppRouting";
 import Sidebar from "@/components/layout/Sidebar";
+import Map from "@/components/map/Map";
 
 export default function MapLayout({ children }: { children: React.ReactNode }) {
   const { showSidebar } = useAppRouting();
@@ -13,7 +14,9 @@ export default function MapLayout({ children }: { children: React.ReactNode }) {
         style={{ boxShadow: "0 10px 30px rgba(0,0,0,0.08)" }}
       >
         {showSidebar && <Sidebar>{children}</Sidebar>}
-        <div className="relative flex-1">Map </div>
+        <div className="relative flex-1">
+          <Map />
+        </div>
       </div>
     </div>
   );
