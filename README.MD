@@ -136,7 +136,7 @@ Application will be available at:
 ### 3. Stop Docker Services
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ---
