@@ -1,4 +1,5 @@
 "use client";
+import StatsBar from "../layout/Statsbar";
 
 import dynamic from "next/dynamic";
 
@@ -15,5 +16,14 @@ const MapComponent = dynamic(() => import("./MapComponent"), {
 });
 
 export default function Map() {
-  return <MapComponent />;
+  return (
+    <div className="absolute inset-0 z-0">
+      {/* Stats card – top right */}
+      <div className="absolute top-4 right-34 z-10 hidden sm:block">
+        <StatsBar />
+      </div>
+
+      <MapComponent />
+    </div>
+  );
 }
