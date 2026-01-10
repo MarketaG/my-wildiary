@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Work_Sans } from "next/font/google";
 import { Providers } from "./providers";
 import TopNav from "../components/layout/TopNav";
+import Footer from "@/components/layout/Footer";
 
 import "./globals.css";
 
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: Props) {
           <div className="h-screen flex flex-col">
             <TopNav />
             <main className="flex-1 overflow-hidden relative">{children}</main>
+            <Footer />
           </div>
         </Providers>
       </body>
