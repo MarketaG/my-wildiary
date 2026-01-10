@@ -6,12 +6,15 @@ import {
   useState,
   useEffect,
   ReactNode,
+  useMemo,
+  useCallback,
 } from "react";
 import { fetchObservations, searchObservations } from "@/lib/api";
 import type { Observation } from "@/types/observation";
 
 type ObservationsContextType = {
   observations: Observation[];
+  refetch: () => Promise<void>;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   filteredObservations: Observation[];
@@ -38,10 +41,18 @@ export function ObservationsProvider({ children }: { children: ReactNode }) {
     null
   );
 
-  // load all observations on mount
-  useEffect(() => {
-    fetchObservations().then(setObservations);
+  const refetch = useCallback(async () => {
+    try {
+      const data = await fetchObservations();
+      setObservations(data);
+    } catch (error) {
+      console.error("Failed to refetch observations:", error);
+    }
   }, []);
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   // debounced search
   useEffect(() => {
@@ -69,25 +80,38 @@ export function ObservationsProvider({ children }: { children: ReactNode }) {
       } finally {
         setIsSearching(false);
       }
-    }, 500); // debounce
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [searchQuery, observations]);
 
+  //
+  const value = useMemo(
+    () => ({
+      observations,
+      refetch,
+      searchQuery,
+      setSearchQuery,
+      filteredObservations,
+      selectedId,
+      setSelectedId,
+      isSearching,
+      selectedCoords,
+      setSelectedCoords,
+    }),
+    [
+      observations,
+      refetch,
+      searchQuery,
+      filteredObservations,
+      selectedId,
+      isSearching,
+      selectedCoords,
+    ]
+  );
+
   return (
-    <ObservationsContext.Provider
-      value={{
-        observations,
-        searchQuery,
-        setSearchQuery,
-        filteredObservations,
-        selectedId,
-        setSelectedId,
-        isSearching,
-        selectedCoords,
-        setSelectedCoords,
-      }}
-    >
+    <ObservationsContext.Provider value={value}>
       {children}
     </ObservationsContext.Provider>
   );

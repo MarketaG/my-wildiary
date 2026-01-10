@@ -147,4 +147,64 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// GET search observations
+router.get("/search", async (req, res) => {
+  try {
+    const db = await getDb();
+    const query = req.query.q as string;
+
+    if (!query) {
+      return res.status(400).json({ error: "Query parameter 'q' is required" });
+    }
+
+    const observations = await db
+      .collection("observations")
+      .aggregate([
+        {
+          $search: {
+            index: "observations_search",
+            text: {
+              query: query,
+              path: ["title", "description"],
+              fuzzy: { maxEdits: 1 },
+            },
+          },
+        },
+        {
+          $lookup: {
+            from: "animals",
+            localField: "animalId",
+            foreignField: "_id",
+            as: "animal",
+          },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        {
+          $unwind: { path: "$animal", preserveNullAndEmptyArrays: true },
+        },
+        {
+          $unwind: { path: "$user", preserveNullAndEmptyArrays: true },
+        },
+        {
+          $project: {
+            "user.password": 0,
+          },
+        },
+      ])
+      .toArray();
+
+    res.json(observations);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to search observations" });
+  }
+});
+
 export default router;

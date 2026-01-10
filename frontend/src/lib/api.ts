@@ -1,4 +1,8 @@
-import { Animal, Observation } from "@/types/observation";
+import {
+  Animal,
+  Observation,
+  UpdateObservationInput,
+} from "@/types/observation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -34,6 +38,16 @@ export async function deleteObservation(id: string) {
     method: "DELETE",
   });
   if (!res.ok) throw new Error("Failed to delete observation");
+}
+
+export async function searchObservations(
+  query: string
+): Promise<Observation[]> {
+  const res = await fetch(
+    `${API_URL}/api/observations/search?q=${encodeURIComponent(query)}`
+  );
+  if (!res.ok) throw new Error("Failed to search observations");
+  return res.json();
 }
 
 // Animals

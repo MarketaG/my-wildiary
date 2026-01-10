@@ -1,38 +1,55 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useAppRouting } from "@/hooks/useAppRouting";
 import { useObservations } from "@/contexts/ObservationsContext";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
+import Logo from "./Logo";
 
 import {
   House,
   ClipboardList,
-  Github,
+  Github, // todo
   Plus,
   Search,
   X,
   Loader2,
 } from "lucide-react";
 
-/**
- * NAVIGATION
- * Main entry point for navigation-related components and logic.
- */
 export default function TopNav() {
   const router = useRouter();
-  const pathname = usePathname();
   const { searchQuery, setSearchQuery, isSearching } = useObservations();
   const [searchOpen, setSearchOpen] = useState(false);
 
-  const isActive = (path: string) => pathname === path;
+  const { pageType } = useAppRouting();
+
+  // checking the active menu
+  const isActive = (type: "home" | "observations-list") => {
+    if (type === "home") return pageType === "home";
+    if (type === "observations-list")
+      return [
+        "observations-list",
+        "observation-detail",
+        "observation-edit",
+        "observation-new",
+      ].includes(pageType);
+    return false;
+  };
 
   const handleSearch = (value: string) => {
     setSearchQuery(value);
-    if (value && !pathname.startsWith("/observations")) {
+    if (
+      value &&
+      ![
+        "observations-list",
+        "observation-detail",
+        "observation-edit",
+        "observation-new",
+      ].includes(pageType)
+    ) {
       router.push("/observations");
     }
   };
@@ -41,23 +58,17 @@ export default function TopNav() {
     <nav className="sticky top-0 z-50 bg-foreground shadow-md backdrop-blur-sm">
       <div className="px-8 py-4">
         <div className="relative flex items-center justify-between gap-4">
-          {/* Left */}
+          {/* logo */}
           <Link href="/">
-            <Image
-              src="/nav_logo.svg"
-              alt="navigation logo"
-              width={144}
-              height={48}
-              fetchPriority="high"
-            />
+            <Logo className="h-12 w-auto text-text-primary dark:text-text-inverted" />
           </Link>
 
-          {/* Center */}
+          {/* desktop menu */}
           <div className="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2 max-w-[40%]">
             <Link
               href="/"
               className={`relative flex items-center px-4 py-1.5 font-medium transition-all duration-200 ease-out ${
-                isActive("/")
+                isActive("home")
                   ? "bg-background text-text-primary rounded-xl shadow-md scale-[1.03]"
                   : "text-text-subtitle hover:text-text-primary"
               }`}
@@ -68,8 +79,7 @@ export default function TopNav() {
             <Link
               href="/observations"
               className={`relative flex items-center px-4 py-1.5 font-medium transition-all duration-200 ease-out ${
-                isActive("/observations") ||
-                pathname.startsWith("/observations")
+                isActive("observations-list")
                   ? "bg-background text-text-primary rounded-xl shadow-md scale-[1.03]"
                   : "text-text-subtitle hover:text-text-primary"
               }`}
@@ -79,14 +89,14 @@ export default function TopNav() {
             </Link>
           </div>
 
-          {/* Right */}
+          {/* right section */}
           <div className="flex items-center gap-3">
-            {/* --Search */}
+            {/* desktop Search */}
             <div className="hidden md:block">
               {searchOpen ? (
                 <div className="flex items-center gap-2 bg-background rounded-xl px-3 py-1 shadow-sm">
                   {isSearching ? (
-                    <Loader2 className="w-4 h-4 text-text-muted" />
+                    <Loader2 className="w-4 h-4 text-text-muted animate-spin" />
                   ) : (
                     <Search className="w-4 h-4 text-text-muted" />
                   )}
@@ -105,21 +115,21 @@ export default function TopNav() {
                     }}
                     className="p-2 cursor-pointer"
                   >
-                    <X className="w-4 h-4 text-text-muted hover:text-text-tertiarys" />
+                    <X className="w-4 h-4 text-text-muted hover:text-text-tertiary" />
                   </button>
                 </div>
               ) : (
                 <button
                   onClick={() => setSearchOpen(true)}
-                  className="cursor-pointer p-2 text-text-muted hover:text-text-tertiary transition-colors"
                   title="Search"
+                  className="cursor-pointer hidden md:inline-flex items-center rounded-md px-2 py-1 text-text-muted hover:bg-accent/10 hover:text-text-tertiary transition"
                 >
                   <Search className="w-5 h-5" />
                 </button>
               )}
             </div>
 
-            {/* --Search - Mobile */}
+            {/* Mobile Search Button */}
             <button
               onClick={() => setSearchOpen(!searchOpen)}
               className="md:hidden p-2 text-text-muted hover:text-text-tertiary transition-colors"
@@ -127,24 +137,24 @@ export default function TopNav() {
               <Search className="w-5 h-5" />
             </button>
 
-            {/* --Divider */}
-            <div className="hidden sm:block bg-text-muted h-5 w-px text-text-muted " />
+            {/* divider */}
+            <div className="hidden sm:block bg-text-muted h-5 w-px text-text-muted" />
 
-            {/* --GitHub */}
+            {/* gitHub */}
             <Link
               href="https://github.com/MarketaG/my-wildiary"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:block p-2 text-text-muted hover:text-text-tertiary transition-colors"
               title="View on GitHub"
+              className="hidden sm:inline-flex items-center rounded-md px-2 py-1 text-text-muted hover:bg-accent/10 hover:text-text-tertiary transition"
             >
-              <Github className="w-5 h-5 text-text-muted hover:text-text-tertiary transition-colors" />
+              <Github className="w-5 h-5" />
             </Link>
 
-            {/* --Theme */}
+            {/* theme */}
             <ThemeToggle />
 
-            {/* Add */}
+            {/* new */}
             <button
               onClick={() => router.push("/observations/new")}
               className="cursor-pointer flex items-center gap-2 bg-accent hover:bg-accent-hover text-background px-3 sm:px-4 py-2 rounded-xl font-medium transition-colors shadow-sm"
@@ -155,7 +165,7 @@ export default function TopNav() {
           </div>
         </div>
 
-        {/* Mobile Search Bar - Expandable */}
+        {/* Mobile Search Bar */}
         {searchOpen && (
           <div className="md:hidden mt-4 flex items-center gap-2 text-text-muted hover:text-text-tertiary rounded-xl px-3 py-2 shadow-sm">
             {isSearching ? (
@@ -183,12 +193,12 @@ export default function TopNav() {
           </div>
         )}
 
-        {/* Mobile Navigation */}
+        {/* Mobile Menu */}
         <div className="md:hidden mt-4 flex gap-2">
           <Link
             href="/"
             className={`flex-1 text-center px-4 py-2 font-medium transition-all duration-200 ${
-              isActive("/")
+              isActive("home")
                 ? "bg-foreground text-background rounded-xl"
                 : "text-text-muted hover:text-text-tertiary"
             }`}
@@ -198,7 +208,7 @@ export default function TopNav() {
           <Link
             href="/observations"
             className={`flex-1 text-center px-4 py-2 font-medium transition-all duration-200 ${
-              pathname.startsWith("/observations")
+              isActive("observations-list")
                 ? "bg-foreground text-background rounded-xl"
                 : "text-text-muted hover:text-text-tertiary"
             }`}
