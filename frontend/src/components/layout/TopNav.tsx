@@ -53,15 +53,20 @@ export default function TopNav() {
       router.push("/observations");
     }
   };
-
+  console.log("APP VERSION:", process.env.NEXT_PUBLIC_APP_VERSION);
   return (
     <nav className="sticky top-0 z-50 bg-foreground shadow-md backdrop-blur-sm">
       <div className="px-8 py-4">
         <div className="relative flex items-center justify-between gap-4">
-          {/* logo */}
-          <Link href="/">
-            <Logo className="h-12 w-auto text-text-primary dark:text-text-inverted" />
-          </Link>
+          {/* logo + version */}
+          <div className="flex items-center gap-2">
+            <Link href="/">
+              <Logo className="h-12 w-auto text-text-primary" />
+            </Link>
+            <span className="text-xs font-semibold text-text-muted/50 border border-text-muted/50 rounded-full px-2.5 py-1 whitespace-nowrap select-none">
+              v{process.env.NEXT_PUBLIC_APP_VERSION || "0.0.0"}
+            </span>
+          </div>
 
           {/* desktop menu */}
           <div className="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2 max-w-[40%]">
