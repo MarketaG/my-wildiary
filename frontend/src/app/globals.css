@@ -41,5 +41,6 @@
 @layer base {
   body {
     @apply bg-background text-text-primary;
+    font-family: var(--font-work-sans), sans-serif;
   }
 }
