@@ -1,5 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
+import { useObservations } from "../../contexts/ObservationsContext";
+import { useAppRouting } from "@/hooks/useAppRouting";
+
 import {
   MapContainer,
   TileLayer,
@@ -10,18 +14,21 @@ import {
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useObservations } from "../../contexts/ObservationsContext";
-import { usePathname } from "next/navigation";
+
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
-import { useEffect } from "react";
 
 function MapResizeHandler() {
   const map = useMap();
+  const { pageType } = useAppRouting();
+
   useEffect(() => {
-    const timer = setTimeout(() => map.invalidateSize(), 300);
+    const timer = setTimeout(() => {
+      map.invalidateSize();
+    }, 300);
     return () => clearTimeout(timer);
-  }, [map]);
+  }, [map, pageType]);
+
   return null;
 }
 
@@ -43,13 +50,14 @@ function MapZoomHandler() {
 }
 
 function MapClickHandler() {
-  const pathname = usePathname();
+  const { pageType } = useAppRouting();
   const { setSelectedCoords } = useObservations();
-  const isNewForm = pathname === "/observations/new";
 
   useMapEvents({
     click(e) {
-      if (isNewForm) setSelectedCoords([e.latlng.lat, e.latlng.lng]);
+      if (pageType === "observation-new") {
+        setSelectedCoords([e.latlng.lat, e.latlng.lng]);
+      }
     },
   });
 

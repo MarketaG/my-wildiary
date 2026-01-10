@@ -2,6 +2,8 @@
 
 **Wildlife Observation Tracker** - A web application for tracking and sharing wildlife observations with interactive maps and detailed species information.
 
+**[Live Demo](https://my-wildiary.vercel.app/)** | **[GitHub Repository](https://github.com/MarketaG/my-wildiary)**
+
 ---
 
 ## About

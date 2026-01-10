@@ -4,7 +4,7 @@ import { useObservations } from "@/contexts/ObservationsContext";
 
 import Link from "next/link";
 import ObservationCard from "./ObservationCard";
-import { Loader2, ArrowBigRight } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 export default function ObservationsSection() {
   const { filteredObservations, isSearching, searchQuery } = useObservations();
@@ -38,10 +38,9 @@ export default function ObservationsSection() {
             <p className="mb-4">No observations yet.</p>
             <Link
               href="/observations/new"
-              className="text-accent hover:text-accent-hover font-medium"
+              className="text-accent flex hover:text-accent-hover font-medium"
             >
               Create your first observation
-              <ArrowBigRight className="w-4 h-4 ml-1" />
             </Link>
           </>
         )}
