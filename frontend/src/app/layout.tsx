@@ -1,3 +1,4 @@
+import { ObservationsProvider } from "../contexts/ObservationsContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import TopNav from "../components/layout/TopNav";
 import type { Metadata } from "next";
@@ -28,10 +29,14 @@ export default function RootLayout({ children }: Props) {
     <ThemeProvider>
       <html lang="en">
         <body>
-          <div className="h-screen flex flex-col">
-            <TopNav />
-            <main className="flex-1 overflow-hidden relative">{children}</main>
-          </div>
+          <ObservationsProvider>
+            <div className="h-screen flex flex-col">
+              <TopNav />
+              <main className="flex-1 overflow-hidden relative">
+                {children}
+              </main>
+            </div>
+          </ObservationsProvider>
         </body>
       </html>
     </ThemeProvider>
