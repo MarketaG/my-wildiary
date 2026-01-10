@@ -27,3 +27,14 @@ export type Observation = {
   animal?: Animal;
   user?: User;
 };
+
+export type UpdateObservationInput = {
+  title?: string;
+  description?: string;
+  habitat?: string;
+  weather?: string;
+  latitude?: number;
+  longitude?: number;
+  imageUrl?: string;
+  animalId?: string;
+};
