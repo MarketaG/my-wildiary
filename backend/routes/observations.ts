@@ -4,6 +4,77 @@ import { ObjectId } from "mongodb";
 
 const router = Router();
 
+// GET search observations
+// - In production (MongoDB Atlas) > uses $search with Atlas Search index
+// - In development (local MongoDB) > falls back to regex search
+router.get("/search", async (req, res) => {
+  try {
+    const db = await getDb();
+    const query = (req.query.q as string)?.trim();
+
+    if (!query) {
+      return res.status(400).json({ error: "Query parameter 'q' is required" });
+    }
+
+    const isProduction = process.env.NODE_ENV === "production";
+
+    const pipeline = isProduction
+      ? [
+          {
+            $search: {
+              index: "observations_search",
+              text: {
+                query,
+                path: ["title", "description"],
+                fuzzy: { maxEdits: 1 },
+              },
+            },
+          },
+        ]
+      : [
+          {
+            $match: {
+              $or: [
+                { title: { $regex: query, $options: "i" } },
+                { description: { $regex: query, $options: "i" } },
+              ],
+            },
+          },
+        ];
+
+    const observations = await db
+      .collection("observations")
+      .aggregate([
+        ...pipeline,
+        {
+          $lookup: {
+            from: "animals",
+            localField: "animalId",
+            foreignField: "_id",
+            as: "animal",
+          },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "user",
+          },
+        },
+        { $unwind: { path: "$animal", preserveNullAndEmptyArrays: true } },
+        { $unwind: { path: "$user", preserveNullAndEmptyArrays: true } },
+        { $project: { "user.password": 0 } },
+      ])
+      .toArray();
+
+    res.json(observations);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to search observations" });
+  }
+});
+
 // GET all observations (with animals and users population)
 router.get("/", async (_req, res) => {
   try {
@@ -175,66 +246,6 @@ router.put("/:id", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to update observation" });
-  }
-});
-
-// GET search observations
-router.get("/search", async (req, res) => {
-  try {
-    const db = await getDb();
-    const query = req.query.q as string;
-
-    if (!query) {
-      return res.status(400).json({ error: "Query parameter 'q' is required" });
-    }
-
-    const observations = await db
-      .collection("observations")
-      .aggregate([
-        {
-          $search: {
-            index: "observations_search",
-            text: {
-              query: query,
-              path: ["title", "description"],
-              fuzzy: { maxEdits: 1 },
-            },
-          },
-        },
-        {
-          $lookup: {
-            from: "animals",
-            localField: "animalId",
-            foreignField: "_id",
-            as: "animal",
-          },
-        },
-        {
-          $lookup: {
-            from: "users",
-            localField: "userId",
-            foreignField: "_id",
-            as: "user",
-          },
-        },
-        {
-          $unwind: { path: "$animal", preserveNullAndEmptyArrays: true },
-        },
-        {
-          $unwind: { path: "$user", preserveNullAndEmptyArrays: true },
-        },
-        {
-          $project: {
-            "user.password": 0,
-          },
-        },
-      ])
-      .toArray();
-
-    res.json(observations);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to search observations" });
   }
 });
 

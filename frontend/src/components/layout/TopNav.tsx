@@ -53,7 +53,6 @@ export default function TopNav() {
       router.push("/observations");
     }
   };
-  console.log("APP VERSION:", process.env.NEXT_PUBLIC_APP_VERSION);
   return (
     <nav className="sticky top-0 z-50 bg-foreground shadow-md backdrop-blur-sm">
       <div className="px-8 py-4">

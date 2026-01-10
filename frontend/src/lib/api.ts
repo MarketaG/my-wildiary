@@ -61,6 +61,7 @@ export async function searchObservations(
   const res = await fetch(
     `${API_URL}/api/observations/search?q=${encodeURIComponent(query)}`
   );
+
   if (!res.ok) throw new Error("Failed to search observations");
   return res.json();
 }
